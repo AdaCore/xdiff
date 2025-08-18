@@ -1,0 +1,13 @@
+library project C_Xdiff is
+
+   xdiff_prefix := External("XDIFF_PREFIX", "src");
+
+   for Languages use ("C");
+   for Source_Dirs use (xdiff_prefix);
+   for Library_Name use "xdiff";
+   for Library_Dir use ".lib";
+   for Object_Dir use ".obj";
+   for Externally_Built use "false";
+   for Library_Kind use "static";
+
+end C_Xdiff;

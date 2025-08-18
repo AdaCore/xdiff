@@ -1,0 +1,7 @@
+src/.clang*
+testsuite/src/.clang*
+.obj
+.lib
+src/c_xdiff/.obj
+src/c_xdiff/.lib
+testsuite/.obj
