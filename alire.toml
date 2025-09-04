@@ -1,0 +1,17 @@
+name = "xdiff"
+description = "This is an Ada binding and C xdiff library"
+version = "1.0.0"
+
+authors = ["AdaCore"]
+maintainers = ["reznik@adacore.com", "chouteau@adacore.com"]
+maintainers-logins = ["reznikmm", "Fabien-Chouteau"]
+licenses = "Apache-2.0 WITH LLVM-exception"
+website = "https://github.com/AdaCore/xdiff"
+tags = ["text", "diff"]
+
+[build-switches]
+"*".debug_info = "Yes"
+
+[configuration]
+generate_ada = false
+generate_c = false

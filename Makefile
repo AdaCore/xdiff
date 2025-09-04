@@ -1,11 +1,11 @@
 DESTDIR ?= install
 
 all:
-	gprbuild -p -P ada_xdiff.gpr
+	gprbuild -p -P xdiff.gpr
 
 clean:
-	gprclean -P ada_xdiff.gpr
+	gprclean -P xdiff.gpr
 	rm -rf generated
 
 install:
-	gprinstall -f -r -p -P ada_xdiff.gpr --prefix=$(DESTDIR)
+	gprinstall -f -r -p -P xdiff.gpr --prefix=$(DESTDIR)
