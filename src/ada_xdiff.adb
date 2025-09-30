@@ -27,7 +27,7 @@ package body Ada_XDiff is
 
       F1   : Interfaces.C.Strings.chars_ptr := New_String (File1);
       F2   : Interfaces.C.Strings.chars_ptr := New_String (File2);
-      Edit : Edits := Internal (F1, F2, Integer (Options));
+      Edit : constant Edits := Internal (F1, F2, Integer (Options));
    begin
       Free (F1);
       Free (F2);
