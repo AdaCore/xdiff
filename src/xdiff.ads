@@ -4,7 +4,7 @@
 --  SPDX-License-Identifier: Apache-2.0
 --
 
-package Ada_XDiff is
+package XDiff is
 
    type XDIFF_FLAGS is mod 2 ** 24;
    XDF_NEED_MINIMAL             : constant XDIFF_FLAGS := 2 ** 0;
@@ -67,4 +67,4 @@ private
    pragma Import (C, Next_Edit, "next_edit");
    pragma Import (C, Free_Edits, "free_edits");
 
-end Ada_XDiff;
+end XDiff;

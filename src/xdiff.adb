@@ -7,7 +7,7 @@
 with Interfaces.C;         use Interfaces.C;
 with Interfaces.C.Strings; use Interfaces.C.Strings;
 
-package body Ada_XDiff is
+package body XDiff is
 
    ---------
    -- Foo --
@@ -58,4 +58,4 @@ package body Ada_XDiff is
       return Boolean (Internal (Edit));
    end Is_Empty;
 
-end Ada_XDiff;
+end XDiff;
