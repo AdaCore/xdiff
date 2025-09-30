@@ -9,7 +9,7 @@ include:
   # Build on Linux and Windows
   - component: $CI_SERVER_FQDN/eng/gitlab-templates/build@~latest
     inputs:
-      anod-args: build ada-xdiff $ACI_TRACK_QUALIFIER
+      anod-args: build xdiff $ACI_TRACK_QUALIFIER
       cpus: 4
       windows: true
       save-anod-logs: true

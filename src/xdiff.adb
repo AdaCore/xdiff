@@ -7,7 +7,7 @@
 with Interfaces.C;         use Interfaces.C;
 with Interfaces.C.Strings; use Interfaces.C.Strings;
 
-package body Ada_XDiff is
+package body XDiff is
 
    ---------
    -- Foo --
@@ -27,7 +27,7 @@ package body Ada_XDiff is
 
       F1   : Interfaces.C.Strings.chars_ptr := New_String (File1);
       F2   : Interfaces.C.Strings.chars_ptr := New_String (File2);
-      Edit : Edits := Internal (F1, F2, Integer (Options));
+      Edit : constant Edits := Internal (F1, F2, Integer (Options));
    begin
       Free (F1);
       Free (F2);
@@ -58,4 +58,4 @@ package body Ada_XDiff is
       return Boolean (Internal (Edit));
    end Is_Empty;
 
-end Ada_XDiff;
+end XDiff;
