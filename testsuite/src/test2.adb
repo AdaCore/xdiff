@@ -1,5 +1,5 @@
 with Ada.Text_IO; use Ada.Text_IO;
-with Ada_XDiff;   use Ada_XDiff;
+with XDiff;       use XDiff;
 with Utils;       use Utils;
 
 procedure Test2 is
@@ -15,17 +15,16 @@ begin
    Put_Line ("The diff will not be shown in the output.");
 
    declare
-      Edit      : Edits := XDiff (File1, File2, XDF_PATIENCE_DIFF);
-      Cur       : Edits := Edit;
+      Edit      : Edits := XDiff.XDiff (File1, File2, XDF_PATIENCE_DIFF);
+      Cur       : Edits := XDIFF.First_Edit (Edit);
       Nb_Result : Integer := 0;
    begin
       Put_Line ("Finished computing the diff");
       --  Doing a simple loop on the result to check that the list is working
-      while Ada_XDiff.Has_Next (Cur) loop
-         --  Discard the first node which is fake
-         Cur := Ada_XDiff.Next_Edit (Cur);
-
+      loop
          Nb_Result := Nb_Result + 1;
+         exit when not XDiff.Has_Next (Cur);
+         Cur := XDiff.Next_Edit (Cur);
       end loop;
 
       Put_Line ("The number of textEdit is:" & Nb_Result'Image);

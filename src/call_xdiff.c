@@ -54,11 +54,36 @@ has_next (struct edits *edit)
   return edit->next != NULL;
 }
 
+static struct edits null_edit = {-1, -1, -1, -1, NULL};
+
+bool
+is_null_edit (struct edits *edit)
+{
+  //  Check the location and not next, we want to remove the header only
+  return edit != NULL && edit->delete.start == null_edit.delete.start
+         && edit->delete.end == null_edit.delete.end
+         && edit->insert.start == null_edit.insert.start
+         && edit->insert.end == null_edit.insert.end;
+}
+
 bool
 is_empty (struct edits *edit)
 {
-  return edit == NULL;
+  // Either the list is NULL or we have only the header and nothing after
+  return edit == NULL || (is_null_edit (edit) && edit->next == NULL);
 }
+
+struct edits *
+first_edit (struct edits *edit)
+{
+  // Remove the header
+  if (is_null_edit (edit))
+    {
+      return edit->next;
+    }
+  return NULL;
+}
+
 
 struct edits *
 next_edit (struct edits *edit)
@@ -113,8 +138,17 @@ add_edit (long start_a, long count_a, long start_b, long count_b, void *cb_data)
       new_edit->delete.end = e1;
     }
 
-  new_edit->insert.start = s2;
-  new_edit->insert.end = e2;
+  if (count_b == 0)
+    {
+      // Nothing to insert, set to -1 to be explicit
+      new_edit->insert.start = -1;
+      new_edit->insert.end = e2;
+    }
+  else
+    {
+      new_edit->insert.start = s2;
+      new_edit->insert.end = e2;
+    }
 
   new_edit->next = NULL;
 
@@ -154,11 +188,7 @@ xdiff (char *file1, char *file2, int options)
 {
   // Create the head of the list which is a fake edit
   struct edits *head = malloc (sizeof (struct edits));
-  head->delete.start = -1;
-  head->delete.end = -1;
-  head->insert.start = -1;
-  head->insert.end = -1;
-  head->next = NULL;
+  *head = null_edit;
 
   xpparam_t param = { 0 };
   xdemitconf_t econf = { 0, 0, 0, NULL, NULL, add_edit };
