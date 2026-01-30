@@ -1,4 +1,4 @@
-with "../ada_xdiff";
+with "../xdiff";
 
 project Test is
 

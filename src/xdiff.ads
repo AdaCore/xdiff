@@ -29,15 +29,15 @@ package XDiff is
    --  First_Edit and must be freed by calling Free_Edits.
 
    function Delete_Line_Start (Edit : Edits) return Integer;
-   --  Return the Start line in File1 which must be deleted
-   --  If the value is -1, then there is no line which must be deleted
-   --  and the insertion point is Delete_Line_End
+   --  Return the Start line in File1 which must be deleted or -1
+   --  if nothing should be deleted.
 
    function Delete_Line_End (Edit : Edits) return Integer;
    --  Return the End line in File1 which must be deleted
 
    function Insert_Line_Start (Edit : Edits) return Integer;
-   --  Return the Start line in File2 which must be inserted
+   --  Return the Start line in File2 which must be inserted or -1
+   --  if nothing should be inserted.
 
    function Insert_Line_End (Edit : Edits) return Integer;
    --  Return the End line in File2 which must be inserted
@@ -50,6 +50,9 @@ package XDiff is
 
    function Next_Edit (Edit : Edits) return Edits;
    --  Return the next edit, Has_Next must be True
+
+   function First_Edit (Edit : Edits) return Edits;
+   --  Return the first edit, Is_Empty must be false
 
    procedure Free_Edits (Edit : Edits);
    --  Free edit and all its children
@@ -65,6 +68,7 @@ private
    pragma Import (C, Insert_Line_Start, "insert_line_start");
    pragma Import (C, Insert_Line_End, "insert_line_end");
    pragma Import (C, Next_Edit, "next_edit");
+   pragma Import (C, First_Edit, "first_edit");
    pragma Import (C, Free_Edits, "free_edits");
 
 end XDiff;
