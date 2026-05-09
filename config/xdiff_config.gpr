@@ -13,6 +13,20 @@ abstract project Xdiff_Config is
           );
 
    type Build_Profile_Kind is ("release", "validation", "development");
-   Build_Profile : Build_Profile_Kind := "release";
+   Build_Profile : Build_Profile_Kind := external ("BUILD_MODE", "release");
+
+   OS := external("OS", external("OSNAME", "unknown")); 
+   So_Ext := "";
+   case OS is
+      when "Windows_NT" =>
+         So_Ext := ".dll";
+      when "Darwin" =>
+         So_Ext := ".dylib";
+      when others =>
+         So_Ext := ".so";
+   end case;
+
+   Cflags  := External_As_List ("CFLAGS", " ");
+   Ldflags := External_As_List ("LDFLAGS", " ");
 
 end Xdiff_Config;

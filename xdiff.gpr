@@ -4,7 +4,7 @@ project Xdiff is
 
    for Languages use ("Ada", "C");
    for Library_Name use "xdiff_ada";
-   for Library_Version use Project'Library_Name & ".so." & Xdiff_Config.Crate_Version;
+   for Library_Version use "lib" & Project'Library_Name & "-" & Xdiff_Config.Crate_Version & Xdiff_Config.So_Ext;
 
    for Source_Dirs use ("src/");
    for Object_Dir use "obj/" & Xdiff_Config.Build_Profile;
@@ -16,8 +16,16 @@ project Xdiff is
      external ("XDIFF_LIBRARY_TYPE", external ("LIBRARY_TYPE", "static"));
    for Library_Kind use Library_Type;
 
+   case Library_Type is
+      when "relocatable" =>
+         for Library_Options use Xdiff_Config.Ldflags;
+      when others =>
+         null;
+   end case;
+
    package Compiler is
       for Default_Switches ("Ada") use Xdiff_Config.Ada_Compiler_Switches;
+      for Switches ("C") use Xdiff_Config.Cflags;
    end Compiler;
 
    package Binder is
