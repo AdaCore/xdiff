@@ -33,6 +33,14 @@ all:
 .PHONY: install
 install:
 	for kind in $(ALL_LIBRARY_TYPES) ; do \
+		gprinstall -P src/c_xdiff/c_xdiff.gpr -p -f \
+			-XLIBRARY_TYPE=$$kind \
+			-XBUILD_MODE=$(BUILD_MODE) \
+			-XOSNAME=$(OSNAME) \
+			--relocate-build-tree="$(BUILD_DIR)"/src/c_xdiff \
+			--prefix="$(INSTALL_DIR)" \
+			--build-name=$$kind \
+			--build-var=LIBRARY_TYPE ; \
 		gprinstall -P xdiff.gpr -p -f \
 			-XLIBRARY_TYPE=$$kind \
 			-XBUILD_MODE=$(BUILD_MODE) \
@@ -46,6 +54,10 @@ install:
 .PHONY: clean
 clean:
 	gprclean -P xdiff.gpr \
+		--relocate-build-tree="$(BUILD_DIR)" \
+		-XLIBRARY_TYPE=$(LIBRARY_TYPE) \
+		-XBUILD_MODE=$(BUILD_MODE)
+	gprclean -P src/c_xdiff/c_xdiff.gpr \
 		--relocate-build-tree="$(BUILD_DIR)" \
 		-XLIBRARY_TYPE=$(LIBRARY_TYPE) \
 		-XBUILD_MODE=$(BUILD_MODE)
