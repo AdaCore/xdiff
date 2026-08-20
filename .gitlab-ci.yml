@@ -13,3 +13,6 @@ include:
       cpus: 4
       windows: true
       save-anod-logs: true
+  - component: $CI_SERVER_FQDN/it/gitlab-templates/gitleaks@~latest
+    inputs:
+      stage: check
